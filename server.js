@@ -58,6 +58,11 @@ app.get("/", (req, res) => {
   res.send("Hello Technigo!")
 })
 
+app.get('/secrets', req, res) => {
+  res.json({secret: 'This is a super secret message'})
+  
+}
+
 app.post("/users", (req, res) => {
   try {
     const { name, email, password } = req.body
