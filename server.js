@@ -3,6 +3,7 @@ import cors from "cors"
 import crypto from "crypto"
 import express from "express"
 import mongoose from "mongoose"
+import bcrypt from 'bcrypt-nodejs'
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/test-auth"
 mongoose.connect(mongoUrl)
@@ -57,20 +58,28 @@ app.use(express.json())
 // Start defining your routes here
 app.get("/", (req, res) => {
   res.send("Hello Technigo!")
+
 })
+
+
 
 app.get('/secrets', req, res) => {
   res.json({secret: 'This is a super secret message'})
 
 }
 
-app.post("/users", (req, res) => {
+app.post("/users", async (req, res) => {
   try {
-    const { name, email, password } = req.body
+
+  }catch(err){}
+    const { name, email, password } = req.body;
     const salt = bcrypt.genSaltSync()
     const user = new User({ name, email, password: bcrypt.hashSync(password, salt) })
     user.save()
-    res.status(201).json({
+    res.status(201).json({id:user.id, accessToken:user.acessToken});
+} catch (err) {
+
+}
       success: true,
       message: "User created",
       id: user._id,
