@@ -8,6 +8,7 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/test-auth"
 mongoose.connect(mongoUrl)
 mongoose.Promise = Promise
 
+const User = mongoose.model('User', {})
 const { Schema, model } = mongoose
 
 const userSchema = new Schema({
@@ -60,7 +61,7 @@ app.get("/", (req, res) => {
 
 app.get('/secrets', req, res) => {
   res.json({secret: 'This is a super secret message'})
-  
+
 }
 
 app.post("/users", (req, res) => {
