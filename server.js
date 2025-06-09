@@ -74,6 +74,7 @@ app.post("/users", async (req, res) => {
   }catch(err){}
     const { name, email, password } = req.body;
     const salt = bcrypt.genSaltSync()
+    // DO NOT STORE PLAINTEXT PASSWORDS
     const user = new User({ name, email, password: bcrypt.hashSync(password, salt) })
     user.save()
     res.status(201).json({id:user.id, accessToken:user.acessToken});
@@ -97,7 +98,7 @@ app.post("/users", async (req, res) => {
 app.get("/secrets", authenticateUser)
 app.get("/secrets", (req, res) => {
   res.json({
-    secret: "This is secret"
+    secret: "This is a secret"
   })
 })
 
