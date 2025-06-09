@@ -28,22 +28,26 @@ const userSchema = new Schema({
   accessToken: {
     type: String,
     default: () => crypto.randomBytes(128).toString("hex")
+  }});
+
+  
   }
 })
 
 const User = model("User", userSchema)
 
 const authenticateUser = async (req, res, next) => {
-  const user = await User.findOne({
-    accessToken: req.header("Authorization")
+  const user = await User.findOne({accessToken:req.header('Authorization')});
+    
   })
 
   if (user) {
-    req.user = user
+    req.user = user;
     next()
   } else {
-    res.status(401).json({
-      loggedOut: true
+    res.status(401).json({loggedOut: true});
+
+    
     })
   }
 }
@@ -62,7 +66,7 @@ app.get("/", (req, res) => {
 })
 
 
-
+app.get('secret' authenticateUser);)
 app.get('/secrets', req, res) => {
   res.json({secret: 'This is a super secret message'})
 
